@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/http"
 
+	"github.com/PuerkitoBio/goquery"
 	svg "github.com/ajstarks/svgo"
 )
 
@@ -57,18 +57,18 @@ func (g *GithubGrass) Get() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return "", err
-	}
-	res.Body.Close()
-
-	// doc, err := goquery.NewDocumentFromReader(res.Body)
+	// body, err := ioutil.ReadAll(res.Body)
 	// if err != nil {
 	// 	return "", err
 	// }
+	// res.Body.Close()
 
-	// ret, _ := doc.Find("svg").Html()
+	doc, err := goquery.NewDocumentFromReader(res.Body)
+	if err != nil {
+		return "", err
+	}
 
-	return string(body), nil
+	ret, _ := doc.Find("svg").Html()
+
+	return ret, nil
 }
