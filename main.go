@@ -5,15 +5,9 @@ import (
 	"net/http"
 
 	"github.com/PuerkitoBio/goquery"
-	svg "github.com/ajstarks/svgo"
 )
 
 func main() {
-	// http.Handle("/circle", http.HandlerFunc(circle))
-	// err := http.ListenAndServe(":2003", nil)
-	// if err != nil {
-	// 	log.Fatal("ListenAndServe:", err)
-	// }
 	userName := "y-zumi"
 	client := NewClient(userName)
 	resp, err := client.Get()
@@ -22,20 +16,6 @@ func main() {
 	}
 
 	fmt.Printf("%s", resp)
-}
-
-func circle(w http.ResponseWriter, req *http.Request) {
-	s := svg.New(w)
-	s.Start(500, 500)
-	s.Circle(250, 250, 125, "fill:none;stroke:black")
-	s.End()
-	// width := 500
-	// height := 500
-	// canvas := svg.New(os.Stdout)
-	// canvas.Start(width, height)
-	// canvas.Circle(width/2, height/2, 100)
-	// canvas.Text(width/2, height/2, "Hello, SVG", "text-anchor:middle;font-size:30px;fill:white")
-	// canvas.End()
 }
 
 type HttpClient interface {
@@ -68,7 +48,7 @@ func (g *GithubGrass) Get() (string, error) {
 		return "", err
 	}
 
-	ret, _ := doc.Find("svg").Html()
+	ret, _ := doc.Find("svg").Parent().Html()
 
 	return ret, nil
 }
