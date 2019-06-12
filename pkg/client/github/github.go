@@ -28,7 +28,10 @@ func (g *GithubClient) Get() (string, error) {
 		return "", err
 	}
 
-	ret, _ := doc.Find("svg").Parent().Html()
+	ret, err := doc.Find("svg").Parent().Html()
+	if err != nil {
+		return "", err
+	}
 
 	return ret, nil
 }
