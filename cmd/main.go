@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	// TODO: - input arg from terminal
 	userName := "y-zumi"
 	client := gitgrass.NewClient(userName)
 	resp, err := client.Get()
